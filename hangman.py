@@ -41,8 +41,8 @@ def target_word():
         blanks.append("_ ")
     print(letter_list)
 
-def replace_good_guess(guessed_letter):
-    global blanks, letter_list
+def replace_good_guess(guessed_letter, letter_list):
+    # global blanks, letter_list
     if guessed_letter in letter_list:
         index = 0
         for letter in letter_list:
@@ -50,7 +50,7 @@ def replace_good_guess(guessed_letter):
                 blanks[index] = guessed_letter
                 # print(blanks)
             index += 1
-    # return blanks
+    return blanks
 
 target_word()
 
@@ -72,7 +72,7 @@ target_word()
 # print(joined_word)
 
 def play_full_game():
-    global blanks
+    # global blanks
     guesses = 10
 
     while guesses > 0:
@@ -86,7 +86,7 @@ def play_full_game():
         already_guessed.append(guessed_letter)
         print("Already guessed: {}".format(already_guessed))
         if guessed_letter in letter_list:
-            replace_good_guess(guessed_letter)
+            replace_good_guess(guessed_letter, letter_list)
         else:
             guesses -= 1
         print(joined_blanks)
