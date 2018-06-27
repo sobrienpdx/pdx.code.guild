@@ -70,11 +70,9 @@ target_word()
 
 
 # print(joined_word)
-
+print(blanks)
 def play_full_game():
-    # global blanks
     guesses = 10
-
     while guesses > 0:
         joined_blanks = "".join(blanks)
         print(joined_blanks)
@@ -90,5 +88,22 @@ def play_full_game():
         else:
             guesses -= 1
         print(joined_blanks)
+        win = False
+        if "_ " not in blanks:
+            win = True
+            break
+    if win == True:
+        print("You win!")
+    else:
+        print("sorry! you lose!")
 
-play_full_game()
+while True:
+    go_agin = input("would you like to play hangman? ")
+    if go_agin == "y":
+        blanks = []
+        already_guessed = []
+        letter_list = []
+        target_word()
+        play_full_game()
+    else:
+        break
