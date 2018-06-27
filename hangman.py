@@ -39,10 +39,9 @@ def target_word():
         letter_list.append(i)
     for i in word:
         blanks.append("_ ")
-    print(letter_list)
+    # print(letter_list)
 
 def replace_good_guess(guessed_letter, letter_list):
-    # global blanks, letter_list
     if guessed_letter in letter_list:
         index = 0
         for letter in letter_list:
@@ -52,25 +51,9 @@ def replace_good_guess(guessed_letter, letter_list):
             index += 1
     return blanks
 
-target_word()
 
 
-# print(letter_list)
 # print(blanks)
-# guessed_letter = input("What is your guess? ")
-#
-# replace_good_guess(guessed_letter)
-#
-# print(letter_list)
-# print(blanks)
-# guessed_letter = input("What is your guess? ")
-#
-# print(blanks)
-
-
-
-# print(joined_word)
-print(blanks)
 def play_full_game():
     guesses = 10
     while guesses > 0:
@@ -87,7 +70,8 @@ def play_full_game():
             replace_good_guess(guessed_letter, letter_list)
         else:
             guesses -= 1
-        print(joined_blanks)
+        # print(joined_blanks)
+        print("You have {} guesses left".format(guesses))
         win = False
         if "_ " not in blanks:
             win = True
@@ -96,6 +80,9 @@ def play_full_game():
         print("You win!")
     else:
         print("sorry! you lose!")
+        word = "".join(letter_list)
+        print('the word was ""{}"".'.format(word))
+
 
 while True:
     go_agin = input("would you like to play hangman? ")
