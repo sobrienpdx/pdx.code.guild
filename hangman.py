@@ -20,6 +20,11 @@
 # Guess a letter:
 import random
 
+import os
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 guesses = 10
 already_guessed = []
 letter_list = []
@@ -57,6 +62,9 @@ def replace_good_guess(guessed_letter, letter_list):
 def play_full_game():
     guesses = 10
     while guesses > 0:
+        cls()
+        print("Already guessed: {}".format(already_guessed))
+        print("You have {} guesses left".format(guesses))
         joined_blanks = "".join(blanks)
         print(joined_blanks)
         guessed_letter = input("What is your guess? ")
@@ -64,20 +72,21 @@ def play_full_game():
             guessed_letter = input("What is your guess? ")
         if guessed_letter in already_guessed:
             print("You already guessed {}. Try again".format(guessed_letter))
-        already_guessed.append(guessed_letter)
-        print("Already guessed: {}".format(already_guessed))
+            guessed_letter = input("What is your guess? ")
+        else:
+            already_guessed.append(guessed_letter)
         if guessed_letter in letter_list:
             replace_good_guess(guessed_letter, letter_list)
         else:
             guesses -= 1
-        # print(joined_blanks)
-        print("You have {} guesses left".format(guesses))
         win = False
         if "_ " not in blanks:
             win = True
             break
     if win == True:
         print("You win!")
+        word = "".join(letter_list)
+        print('the word was ""{}"".'.format(word))
     else:
         print("sorry! you lose!")
         word = "".join(letter_list)
