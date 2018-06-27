@@ -20,30 +20,34 @@
 # Guess a letter:
 import random
 
-with open("english.text") as f:
-    word_list = f.read()
-    list_of_words = word_list.split()
-
-hangman_list = []
-for i in list_of_words:
-    if len(i) > 5:
-        hangman_list.append(i)
-
-
-
-
 guesses = 10
 already_guessed = []
-# print("_ " * len(word))
 letter_list = []
 blanks = []
 
+# uses text to select target word
+def target_word():
+    with open("english.text") as f:
+        word_list = f.read()
+        list_of_words = word_list.split()
+    hangman_list = []
+    for i in list_of_words:
+        if len(i) > 5:
+            hangman_list.append(i)
+    word = random.choice(hangman_list)
+    for i in word:
+        letter_list.append(i)
+    for i in word:
+        blanks.append("_")
+    return
 
-word = random.choice(hangman_list)
-for i in word:
-    letter_list.append(i)
-for i in word:
-    blanks.append("_")
+
+
+target_word()
+
+
+
+
 
 print(letter_list)
 print(blanks)
