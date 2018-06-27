@@ -38,40 +38,57 @@ def target_word():
     for i in word:
         letter_list.append(i)
     for i in word:
-        blanks.append("_")
-    return
+        blanks.append("_ ")
+    print(letter_list)
 
-
+def replace_good_guess(guessed_letter):
+    global blanks, letter_list
+    if guessed_letter in letter_list:
+        index = 0
+        for letter in letter_list:
+            if letter == guessed_letter:
+                blanks[index] = guessed_letter
+                # print(blanks)
+            index += 1
+    # return blanks
 
 target_word()
 
 
+# print(letter_list)
+# print(blanks)
+# guessed_letter = input("What is your guess? ")
+#
+# replace_good_guess(guessed_letter)
+#
+# print(letter_list)
+# print(blanks)
+# guessed_letter = input("What is your guess? ")
+#
+# print(blanks)
 
 
 
-print(letter_list)
-print(blanks)
-guessed_letter = input("What is your guess? ")
-
-
-if guessed_letter in letter_list:
-    index = 0
-    for letter in letter_list:
-        if letter == guessed_letter:
-            blanks[index] = guessed_letter
-        index += 1
-print(blanks)
-
-
-# joined_word = "".join(letter_list)
 # print(joined_word)
 
-# def play_round():
-# while guesses > 0:
-#     guessed_letter = input("What is your guess? ")
-#     while not (guessed_letter.isalpha() and len(guessed_letter) ==1):
-#         guessed_letter = input("What is your guess? ")
-#     if guessed_letter in already_guessed:
-#         print("You already guessed {}. Try again".format(guessed_letter))
-#     already_guessed.append(guessed_letter)
-#     print("Already guessed: {}".format(already_guessed))
+def play_full_game():
+    global blanks
+    guesses = 10
+
+    while guesses > 0:
+        joined_blanks = "".join(blanks)
+        print(joined_blanks)
+        guessed_letter = input("What is your guess? ")
+        while not (guessed_letter.isalpha() and len(guessed_letter) ==1):
+            guessed_letter = input("What is your guess? ")
+        if guessed_letter in already_guessed:
+            print("You already guessed {}. Try again".format(guessed_letter))
+        already_guessed.append(guessed_letter)
+        print("Already guessed: {}".format(already_guessed))
+        if guessed_letter in letter_list:
+            replace_good_guess(guessed_letter)
+        else:
+            guesses -= 1
+        print(joined_blanks)
+
+play_full_game()
