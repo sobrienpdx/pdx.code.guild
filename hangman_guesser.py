@@ -72,3 +72,6 @@ while True:
         current_list = cull(guess, positions, current_list)
     else:
         current_list = cull(guess, [], current_list)
+    if len(current_list) == 1:
+        print("It's {}. I win. I am the best. I am so smart. S-M-R-T.".format(current_list))
+        break
