@@ -1,13 +1,7 @@
 # LAB: CREDIT CARD VALIDATION
 # Let’s write a function which returns whether a string containing a credit card number is valid as a boolean. The steps are as follows:
-#
-# Convert the input string into a list of ints
-# Slice off the last digit. That is the check digit.
-# Reverse the digits.
-# Double every other element in the reversed list.
-# Subtract nine from numbers over nine.
-# Sum all values.
-# Take the second digit of that sum.
+
+
 # If that matches the check digit, the whole card number is valid.
 # For example, the worked out steps would be:
 #
@@ -20,19 +14,50 @@
 # 5
 # Valid!
 
+
+
 num_list = []
+doubled_list = []
+# get user input and convert to integer:
 card_number = (input("Card number? "))
 for i in card_number:
     num_list.append(int(i))
 print(num_list)
+# Slice off the last digit. That is the check digit:
 check_number = num_list[-1]
 print(check_number)
 num_list.pop()
 print(num_list)
+# Reverse the digits:
 num_list.reverse()
 print(num_list)
-for i in num_list[0: :2]:
-    i = i * 2
-    # if num_list[i] % 2 == 0:
-    #     i = i + i
-print(num_list)
+# Double every other element in the reversed list:
+for index, number in enumerate(num_list):
+    if index % 2 == 0:
+        number = number * 2
+    else:
+        number = number
+    doubled_list.append(number)
+print(doubled_list)
+# Subtract nine from numbers over nine:
+under_10 = []
+for i in doubled_list:
+    if i > 9:
+        adjusted_num = i - 9
+    else:
+        adjusted_num = i
+    under_10.append(adjusted_num)
+print(under_10)
+# Sum all values:
+total = 0
+for i in under_10:
+    total += i
+print(total)
+# Take the second digit of that sum:
+string_total = str(total)
+second_digit = string_total[1]
+print(second_digit)
+if int(second_digit) == check_number:
+    print("Credit card validated")
+else:
+    print("Invalid card number")
