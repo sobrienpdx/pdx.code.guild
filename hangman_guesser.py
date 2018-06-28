@@ -16,7 +16,6 @@ for word in list_of_words:
     if len(word) == length:
         correct_number.append(word)
 
-# print(correct_number)
 
 def choose_letter(current_list):
     guess = "?"
