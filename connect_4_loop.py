@@ -29,7 +29,7 @@ def did_ya_win_across(player):
                         print("Player {} wins!".format(player))
                         print("Player {} wins!!!!!!!!!!!!!!!!!!!!!!!!!".format(player))
                         win = True
-                        break
+                        return win
                 except IndexError:
                     continue
         n += 1
