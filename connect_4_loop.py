@@ -107,7 +107,11 @@ cls()
 refresh_board()
 while True:
     win = False
-    player1 = int(input("Player 1: Which column? "))
+    player1 = (input("Player X: Which column? "))
+    while not (player1.isdigit() and int(player1) < 8):
+        print("Please use numbers 1 through 7.")
+        player1 = (input("Player X: Which column? "))
+    player1 = int(player1)
     n = 0
     while n < 7:
         row = row_names[n]
@@ -127,7 +131,11 @@ while True:
     win = diagonal_back_slash("X")
     if win == True:
         break
-    player2 = int(input("Player 2: Which column? "))
+    player2 = (input("Player O: Which column? "))
+    while not (player2.isdigit() and int(player2) < 8):
+        print("Please use numbers 1 through 7.")
+        player2 = (input("Player O: Which column? "))
+    player2 = int(player2)
     n = 0
     while n < 7:
         row = row_names[n]
