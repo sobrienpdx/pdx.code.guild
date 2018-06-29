@@ -14,6 +14,8 @@ row6 = [" ", " ", " ", " ", " ", " ", " ", ]
 row7 = [" ", " ", " ", " ", " ", " ", " ", ]
 row_names = [row1, row2, row3, row4, row5, row6, row7]
 
+win = False
+
 def did_ya_win_across(player):
     n = 0
     while n < 7:
@@ -26,10 +28,53 @@ def did_ya_win_across(player):
                         print("Player {} wins!".format(player))
                         print("Player {} wins!".format(player))
                         print("Player {} wins!!!!!!!!!!!!!!!!!!!!!!!!!".format(player))
+                        win = True
                         break
                 except IndexError:
                     continue
         n += 1
+
+def diagonal_forward_slash(player):
+    n = 0
+    while n < 5:
+        row = row_names[n]
+        one_up = row_names[n +1]
+        two_up = row_names [n +2]
+        for index, marker in enumerate(row):
+            if marker == player:
+                try:
+                    if (one_up[index +1] == player) and (two_up[index +2] == player):
+                        print("Player {} wins!".format(player))
+                        print("Player {} wins!".format(player))
+                        print("Player {} wins!".format(player))
+                        print("Player {} wins!!!!!!!!!!!!!!!!!!!!!!!!!".format(player))
+                        win = True
+                        return win
+                except IndexError:
+                    continue
+        n += 1
+
+
+def diagonal_back_slash(player):
+    n = 6
+    while n > 0:
+        row = row_names[n]
+        one_down = row_names[n -1]
+        two_down = row_names [n -2]
+        for index, marker in enumerate(row):
+            if marker == player:
+                try:
+                    if (one_down[index +1] == player) and (two_down[index +2] == player):
+                        print("Player {} wins!".format(player))
+                        print("Player {} wins!".format(player))
+                        print("Player {} wins!".format(player))
+                        print("Player {} wins!!!!!!!!!!!!!!!!!!!!!!!!!".format(player))
+                        win = True
+                        return win
+                except IndexError:
+                    continue
+        n -= 1
+
 
 def check_columns(player):
     column_number = 0
@@ -42,10 +87,13 @@ def check_columns(player):
                         print("Player {} wins!".format(player))
                         print("Player {} wins!".format(player))
                         print("Player {} wins!!!!!!!!!!!!!!!!".format(player))
+                        win = True
+                        return win
                 except IndexError:
                     pass
             row +=1
         column_number += 1
+
 def refresh_board():
     print(row7)
     print(row6)
@@ -58,6 +106,7 @@ def refresh_board():
 cls()
 refresh_board()
 while True:
+    win = False
     player1 = int(input("Player 1: Which column? "))
     n = 0
     while n < 7:
@@ -72,9 +121,12 @@ while True:
     # clear the screen and reprint with new play. Check to see if there are any winners yet
     cls()
     refresh_board()
-    did_ya_win_across("X")
-    check_columns("X")
-
+    win = did_ya_win_across("X")
+    win = check_columns("X")
+    win = diagonal_forward_slash("X")
+    win = diagonal_back_slash("X")
+    if win == True:
+        break
     player2 = int(input("Player 2: Which column? "))
     n = 0
     while n < 7:
@@ -90,5 +142,11 @@ while True:
     # clear the screen and reprint with new play. Check to see if there are any winners yet
     cls()
     refresh_board()
-    did_ya_win_across("O")
-    check_columns("O")
+    win = did_ya_win_across("O")
+    win = check_columns("O")
+    win = diagonal_forward_slash("O")
+    win = diagonal_back_slash("O")
+    if win == True:
+        break
+
+print("Good game. Goodbye!")
