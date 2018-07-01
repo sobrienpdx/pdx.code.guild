@@ -22,15 +22,19 @@ def cls():
 
 import random
 
-class Location:
+class Dude:
     def __init__(self, i, j):
         self.i = i
         self.j = j
+        # self.face = face
+
+
+
 
 width = 10  # the width of the board
 height = 10  # the height of the board
 treasure_count = 0
-enemy_locations = []
+enemies = []
 
 # create a board with the given width and height
 # we'll use a list of list to represent the board
@@ -41,18 +45,65 @@ for i in range(height):  # loop over the rows
         board[i].append(' ')  # append an empty space to the board
 
 # define the player position
-player_location = Location(4, 4)
+player = Dude(4, 4)
 
 # add 4 enemies in random locations
 for i in range(4):
-    enemy_locations.append(Location(random.randint(0, height - 1), random.randint(0, width - 1)))
+    enemies.append(Dude(random.randint(0, height - 1), random.randint(0, width - 1)))
+
+def sneak_around(dude):
+    if dude.j < 0:
+        dude.j = width -1
+    if dude.j == width:
+        dude.j = 0
+    if dude.i < 0:
+        dude.i = height -1
+    if dude.i == height:
+        dude.i = 0
+
+def move_player():
+    command = input('what is your command? ')  # get the command from the user
+    if command == 'l':
+        player.j -= 1  # move left
+    elif command == 'r':
+        player.j += 1  # move right
+    elif command == 'u':
+        player.i -= 1  # move up
+    elif command == 'd':
+        player.i += 1  # move down
+    sneak_around(player)
 
 # move enemies around a little
-def move_enemies(enemy_locations):
-    n = random.randint(-1, 1)
-    for enemy_location in enemy_locations:
-        enemy_location.i += n
-        enemy_location.j += n
+def move_enemies(enemies):
+    for enemy in enemies:
+        enemy.i += random.randint(-1, 1)
+        enemy.j += random.randint(-1, 1)
+        sneak_around(enemy)
+
+def character_or_space(i, j):
+    if i == player.i and j == player.j:
+        return '🤓'
+    n = len(enemies) -1
+    while n > -1:
+        if i == enemies[n].i and j == enemies[n].j:
+            return "☠"
+        n -= 1
+    return board[i][j]
+
+def print_board():
+    for i in range(height):
+        for j in range(width):
+            print(character_or_space(i, j), end = ".")
+        print()
+            # if we're at the player location, print the player icon
+        #         if i in enemies.i and j == enemies[n].j:
+        #             print("☠", end=".")
+        #         n -= 1
+        #     if i == player.i and j == player.j
+        #         print('🤓', end='.')
+        #     else:
+        #         print(board[i][j], end='.')  # otherwise print the board square
+        # print()
 
 # add treasures
 for i in range(6):
@@ -65,57 +116,24 @@ while True:
         # print out the board
     cls() #keep the screen in the same place
     print("Treasures: {}".format(treasure_count))
-    for i in range(height):
-        for j in range(width):
-            # if we're at the player location, print the player icon
-            if i == player_location.i and j == player_location.j:
-                print('🤓', end='.')
-            elif i == enemy_locations[0].i and j == enemy_locations[0].j:
-                print("☠", end=".")
-            elif i == enemy_locations[1].i and j == enemy_locations[1].j:
-                print("☠", end=".")
-            elif i == enemy_locations[2].i and j == enemy_locations[2].j:
-                print("☠", end=".")
-            elif i == enemy_locations[3].i and j == enemy_locations[3].j:
-                print("☠", end=".")
-            else:
-                print(board[i][j], end='.')  # otherwise print the board square
-        print()
-    move_enemies(enemy_locations)
 
-    command = input('what is your command? ')  # get the command from the user
-    if command == 'done':
-        break  # exit the game
-    elif command == 'l':
-        player_location.j -= 1  # move left
-        if player_location.j < 0:
-            player_location.j = width -1
-    elif command == 'r':
-        player_location.j += 1  # move right
-        if player_location.j == width:
-            player_location.j = 0
-    elif command == 'u':
-        player_location.i -= 1  # move up
-        if player_location.i < 0:
-            player_location.i = height -1
-    elif command == 'd':
-        player_location.i += 1  # move down
-        if player_location.i == height:
-            player_location.i = 0
-
+    print_board()
+    move_enemies(enemies)
+    move_player()
     # check if the player is on the same space as an enemy
-    if board[player_location.i][player_location.j] == '☠':
-        print('you\'ve encountered an enemy!')
-        action = input('what will you do? ')
-        if action == 'attack':
-            print('you\'ve slain the enemy')
-            board[player_l.ocationi][player_location.j] = ' '  # remove the enemy from the board
-        else:
-            print('you hestitated and were slain')
-            break
+    for index, enemy in enumerate(enemies):
+        if player.i == enemy.i and player.j == enemy.j:
+            print('you\'ve encountered an enemy!')
+            action = input('what will you do? ')
+            if action == 'attack':
+                print('you\'ve slain the enemy')
+                enemies.pop(index)
+            else:
+                print('you hestitated and were slain')
+                break
     # check if the player is on the same space as a treasure
-    if board[player_location.i][player_location.j] == '💎':
+    if board[player.i][player.j] == '💎':
         treasure_count += 1
-        board[player_location.i][player_location.j] = ' '  # remove the treasure from the board
+        board[player.i][player.j] = ' '  # remove the treasure from the board
         print('you\'ve encountered a treasure!')
         time.sleep(2)
