@@ -51,6 +51,12 @@ player = Dude(4, 4)
 for i in range(4):
     enemies.append(Dude(random.randint(0, height - 1), random.randint(0, width - 1)))
 
+# add treasures
+for i in range(6):
+    treasure_i = random.randint(0, height - 1)
+    treasure_j = random.randint(0, width - 1)
+    board[treasure_i][treasure_j] = "💎"
+
 def sneak_around(dude):
     if dude.j < 0:
         dude.j = width -1
@@ -95,21 +101,8 @@ def print_board():
         for j in range(width):
             print(character_or_space(i, j), end = ".")
         print()
-            # if we're at the player location, print the player icon
-        #         if i in enemies.i and j == enemies[n].j:
-        #             print("☠", end=".")
-        #         n -= 1
-        #     if i == player.i and j == player.j
-        #         print('🤓', end='.')
-        #     else:
-        #         print(board[i][j], end='.')  # otherwise print the board square
-        # print()
 
-# add treasures
-for i in range(6):
-    treasure_i = random.randint(0, height - 1)
-    treasure_j = random.randint(0, width - 1)
-    board[treasure_i][treasure_j] = "💎"
+
 
 # loop until the user says 'done' or dies
 while True:
@@ -126,8 +119,15 @@ while True:
             print('you\'ve encountered an enemy!')
             action = input('what will you do? ')
             if action == 'attack':
-                print('you\'ve slain the enemy')
-                enemies.pop(index)
+                victory = random.randint(1, 3)
+                if victory > 1:
+                    print('you\'ve slain the enemy')
+                    time.sleep(2)
+                    enemies.pop(index)
+                elif victory == 1:
+                    print("you have been vanquished by the enemy!")
+                    time.sleep(2)
+                    break
             else:
                 print('you hestitated and were slain')
                 break
