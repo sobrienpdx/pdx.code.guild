@@ -34,11 +34,14 @@ class Board():
 
     def __repr__(self):
         cls()
-        outstring = ""
+        outstring = "|"
+        n = 0
         for row in self.row_names:
             for space in row:
-                outstring += space
-            outstring += "\n"
+                outstring += space + "|"
+                n += 1
+            if n < 7:
+                outstring += "\n|"
         return outstring
 
     def check_for_winner(self, player):
