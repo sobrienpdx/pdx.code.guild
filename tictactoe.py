@@ -12,6 +12,7 @@
 import os
 import time
 
+
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
@@ -57,6 +58,7 @@ class Board():
             time.sleep(1.5)
             game_over = True
             return game_over
+        # checks vertical:s
         index = 0
         while index <3:
             if (self.row0[index] == player.token) and (self.row1[index] == player.token) and (self.row2[index] == player.token):
@@ -104,22 +106,32 @@ class Board():
                 except ValueError:
                     print("Please enter a number between 1 and 9.")
 
+    def play_through(self, player1, player2):
+        while True:
+            game_over = False
+            print(board)
+            board.move(player1)
+            board.check_for_winner(player1)
+            if game_over == True:
+                return player1
+            print(board)
+            board.move(player2)
+            board.check_for_winner(player2)
+            if game_over == True:
+                return player2
 
-player1 = Player("Joe", " X")
-player2 = Player("Sam", " O")
+
+player1_name = input("What is your name, player one? ")
+player1 = Player(player1_name, "X")
+player2_name = input("What is your name, player two? ")
+player2 = Player(player2_name, "O")
 board = Board()
-while True:
-    game_over = False
-    print(board)
-    board.move(player1)
-    board.check_for_winner(player1)
-    if game_over == True:
-        break
-    print(board)
-    board.move(player2)
-    board.check_for_winner(player2)
-    if game_over == True:
-        break
+
+
+winner = board.play_through(player1, player2)
+print(f"{winner} wins!")
+
+
 
 
 # " X̲|"
