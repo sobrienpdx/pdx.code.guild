@@ -11,6 +11,7 @@
 # - is_game_over() Returns true if the game board is full or a player has won.
 import os
 import time
+import random
 
 
 def cls():
@@ -70,39 +71,54 @@ class Board():
             index += 1
 
     def move(self, player):
-        while True:
-            try:
-                what_move = int(input(f"What move would you like to make, {player.name}? (number 1 - 9) \n: ").strip())
-                if not 0 < what_move < 10:
-                    raise ValueError
-                else:
-                    move = what_move
-                    break
-            except ValueError:
-                print("Please enter a number between 1 and 9.")
-        while True:
-            if move in [1, 2, 3]:
-                if self.row0[move -1] == " ":
-                    self.row0[move -1] = player.token
-                    break
-            elif move in [4, 5, 6]:
-                if self.row1[move -4] == " ":
-                    self.row1[move -4] = player.token
-                    break
-            elif move in [7, 8, 9]:
-                if self.row2[move -7] == " ":
-                    self.row2[move -7] = player.token
-                    break
-            print("Space taken. Try again.")
+        if player.name != "computer":
             while True:
                 try:
                     what_move = int(input(f"What move would you like to make, {player.name}? (number 1 - 9) \n: ").strip())
                     if not 0 < what_move < 10:
                         raise ValueError
-                    move = what_move
-                    break
+                    else:
+                        move = what_move
+                        break
                 except ValueError:
                     print("Please enter a number between 1 and 9.")
+            while True:
+                if move in [1, 2, 3]:
+                    if self.row0[move -1] == " ":
+                        self.row0[move -1] = player.token
+                        break
+                elif move in [4, 5, 6]:
+                    if self.row1[move -4] == " ":
+                        self.row1[move -4] = player.token
+                        break
+                elif move in [7, 8, 9]:
+                    if self.row2[move -7] == " ":
+                        self.row2[move -7] = player.token
+                        break
+                print("Space taken. Try again.")
+                while True:
+                    try:
+                        what_move = int(input(f"What move would you like to make, {player.name}? (number 1 - 9) \n: ").strip())
+                        if not 0 < what_move < 10:
+                            raise ValueError
+                        move = what_move
+                        break
+                    except ValueError:
+                        print("Please enter a number between 1 and 9.")
+        else:
+            move = random.randint(1, 9)
+            if move in [1, 2, 3]:
+                if self.row0[move -1] == " ":
+                    self.row0[move -1] = player.token
+            elif move in [4, 5, 6]:
+                if self.row1[move -4] == " ":
+                    self.row1[move -4] = player.token
+            elif move in [7, 8, 9]:
+                if self.row2[move -7] == " ":
+                    self.row2[move -7] = player.token
+
+
+
     def cats_game(self):
         for i in self.row_names:
             for index, space in enumerate(i):
@@ -141,13 +157,18 @@ class Board():
             if full_board == True:
                 return "The cat"
 
-
-player1_name = input("What is your name, player one? ")
-player1 = Player(player1_name, "X")
-player2_name = input("What is your name, player two? ")
-player2 = Player(player2_name, "O")
-board = Board()
-
+opponent = input("Would you like to play against the computer (c) or a human friend (h)? ")
+if opponent == "h":
+    player1_name = input("What is your name, player one? ")
+    player1 = Player(player1_name, "X")
+    player2_name = input("What is your name, player two? ")
+    player2 = Player(player2_name, "O")
+    board = Board()
+elif opponent == "c":
+    player1_name = input("What is your name, player one? ")
+    player1 = Player(player1_name, "X")
+    player2 = Player("computer", "O")
+    board = Board()
 while True:
     winner = board.play_through(player1, player2)
     print(f"{winner} wins!!!!!!!!!")
