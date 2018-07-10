@@ -41,7 +41,7 @@ class Board():
         return outstring
 
     def check_for_winner(self, player):
-        #check vertical:
+        #check horizontal:
         for index, row in enumerate(self.row_names):
             if (row[0] == player.token) and (row[1] == player.token) and (row[2] == player.token):
                 print(f'{player.name} wins!')
@@ -51,6 +51,7 @@ class Board():
         # check diagonal:
         if self.row0[0] == player.token and self.row1[1] == player.token and self.row2[2] == player.token:
             print(f'{player.name} wins!')
+            time.sleep(1.4)
             game_over = True
             return game_over
         if self.row0[2] == player.token and self.row1[1] == player.token and self.row2[0] == player.token:
@@ -67,9 +68,6 @@ class Board():
                 game_over = True
                 return game_over
             index += 1
-
-
-
 
     def move(self, player):
         while True:
@@ -105,20 +103,41 @@ class Board():
                     break
                 except ValueError:
                     print("Please enter a number between 1 and 9.")
+    def cats_game(self):
+        for i in self.row_names:
+            for index, space in enumerate(i):
+                if space == " ":
+                    full_board = False
+                    return full_board
+        full_board = True
+        return full_board
+
+#
+# def any(iterable):
+#     for element in iterable:
+#         if element:
+#             return True
+#     return False
 
     def play_through(self, player1, player2):
         while True:
             game_over = False
             print(board)
             board.move(player1)
-            board.check_for_winner(player1)
+            game_over = board.check_for_winner(player1)
             if game_over == True:
-                return player1
+                return player1.name
+            full_board = board.cats_game()
+            if full_board == True:
+                return "The cat"
             print(board)
             board.move(player2)
-            board.check_for_winner(player2)
+            game_over = board.check_for_winner(player2)
             if game_over == True:
-                return player2
+                return player2.name
+            full_board = board.cats_game()
+            if full_board == True:
+                return "The cat"
 
 
 player1_name = input("What is your name, player one? ")
@@ -129,7 +148,7 @@ board = Board()
 
 
 winner = board.play_through(player1, player2)
-print(f"{winner} wins!")
+print(f"{winner} wins!!!!!!!!!")
 
 
 
