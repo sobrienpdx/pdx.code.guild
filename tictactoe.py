@@ -44,27 +44,27 @@ class Board():
         #check horizontal:
         for index, row in enumerate(self.row_names):
             if (row[0] == player.token) and (row[1] == player.token) and (row[2] == player.token):
-                print(f'{player.name} wins!')
-                time.sleep(1.5)
+                # print(f'{player.name} wins!')
+                # time.sleep(1.5)
                 game_over = True
                 return game_over
         # check diagonal:
         if self.row0[0] == player.token and self.row1[1] == player.token and self.row2[2] == player.token:
-            print(f'{player.name} wins!')
-            time.sleep(1.4)
+            # print(f'{player.name} wins!')
+            # time.sleep(1.4)
             game_over = True
             return game_over
         if self.row0[2] == player.token and self.row1[1] == player.token and self.row2[0] == player.token:
-            print(f'{player.name} wins!')
-            time.sleep(1.5)
+            # print(f'{player.name} wins!')
+            # time.sleep(1.5)
             game_over = True
             return game_over
         # checks vertical:s
         index = 0
         while index <3:
             if (self.row0[index] == player.token) and (self.row1[index] == player.token) and (self.row2[index] == player.token):
-                print(f'{player.name} wins!')
-                time.sleep(1.5)
+                # print(f'{player.name} wins!')
+                # time.sleep(1.5)
                 game_over = True
                 return game_over
             index += 1
@@ -124,6 +124,7 @@ class Board():
             game_over = False
             print(board)
             board.move(player1)
+            print(board)
             game_over = board.check_for_winner(player1)
             if game_over == True:
                 return player1.name
@@ -132,6 +133,7 @@ class Board():
                 return "The cat"
             print(board)
             board.move(player2)
+            print(board)
             game_over = board.check_for_winner(player2)
             if game_over == True:
                 return player2.name
@@ -146,12 +148,17 @@ player2_name = input("What is your name, player two? ")
 player2 = Player(player2_name, "O")
 board = Board()
 
+while True:
+    winner = board.play_through(player1, player2)
+    print(f"{winner} wins!!!!!!!!!")
+    print(f"{winner} wins!!!!!!!!!!!!!")
+    print(f"{winner} wins!!!!!!!!!!!!!!!!!!")
+    play_again = input("Would you like to play again? ")
+    board = Board()
+    if play_again == "n":
+        break
 
-winner = board.play_through(player1, player2)
-print(f"{winner} wins!!!!!!!!!")
 
-
-
-
+print("ok, goodbye")
 # " X̲|"
 # O̲
