@@ -24,9 +24,6 @@ class Player(): #Could also be written as named tuple
 
 class Board():
     def __init__(self):
-        # self.row0 = [" _|", "_", "|_"]
-        # self.row1 = [" _|", "_", "|_"]
-        # self.row2 = ["  |", " ", "| "]
         self.row0 = [" ", " ", " "]
         self.row1 = [" ", " ", " "]
         self.row2 = [" ", " ", " "]
@@ -48,27 +45,19 @@ class Board():
         #check horizontal:
         for index, row in enumerate(self.row_names):
             if (row[0] == player.token) and (row[1] == player.token) and (row[2] == player.token):
-                # print(f'{player.name} wins!')
-                # time.sleep(1.5)
                 game_over = True
                 return game_over
         # check diagonal:
         if self.row0[0] == player.token and self.row1[1] == player.token and self.row2[2] == player.token:
-            # print(f'{player.name} wins!')
-            # time.sleep(1.4)
             game_over = True
             return game_over
         if self.row0[2] == player.token and self.row1[1] == player.token and self.row2[0] == player.token:
-            # print(f'{player.name} wins!')
-            # time.sleep(1.5)
             game_over = True
             return game_over
         # checks vertical:s
         index = 0
         while index <3:
             if (self.row0[index] == player.token) and (self.row1[index] == player.token) and (self.row2[index] == player.token):
-                # print(f'{player.name} wins!')
-                # time.sleep(1.5)
                 game_over = True
                 return game_over
             index += 1
@@ -109,18 +98,20 @@ class Board():
                     except ValueError:
                         print("Please enter a number between 1 and 9.")
         else:
-            move = random.randint(1, 9)
-            if move in [1, 2, 3]:
-                if self.row0[move -1] == " ":
-                    self.row0[move -1] = player.token
-            elif move in [4, 5, 6]:
-                if self.row1[move -4] == " ":
-                    self.row1[move -4] = player.token
-            elif move in [7, 8, 9]:
-                if self.row2[move -7] == " ":
-                    self.row2[move -7] = player.token
-
-
+            while True:
+                move = random.randint(1, 9)
+                if move in [1, 2, 3]:
+                    if self.row0[move -1] == " ":
+                        self.row0[move -1] = player.token
+                        break
+                elif move in [4, 5, 6]:
+                    if self.row1[move -4] == " ":
+                        self.row1[move -4] = player.token
+                        break
+                elif move in [7, 8, 9]:
+                    if self.row2[move -7] == " ":
+                        self.row2[move -7] = player.token
+                        break
 
     def cats_game(self):
         for i in self.row_names:
@@ -131,12 +122,6 @@ class Board():
         full_board = True
         return full_board
 
-#
-# def any(iterable):
-#     for element in iterable:
-#         if element:
-#             return True
-#     return False
 
     def play_through(self, player1, player2):
         while True:
@@ -184,5 +169,3 @@ while True:
 
 
 print("ok, goodbye")
-# " X̲|"
-# O̲
