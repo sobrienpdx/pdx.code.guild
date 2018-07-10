@@ -10,6 +10,7 @@
 # - is_full() Returns true if the game board is full.
 # - is_game_over() Returns true if the game board is full or a player has won.
 import os
+import time
 
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
@@ -37,6 +38,35 @@ class Board():
                 outstring += space
             outstring += "\n"
         return outstring
+
+    def check_for_winner(self, player):
+        #check vertical:
+        for index, row in enumerate(self.row_names):
+            if (row[0] == player.token) and (row[1] == player.token) and (row[2] == player.token):
+                print(f'{player.name} wins!')
+                time.sleep(1.5)
+                game_over = True
+                return game_over
+        # check diagonal:
+        if self.row0[0] == player.token and self.row1[1] == player.token and self.row2[2] == player.token:
+            print(f'{player.name} wins!')
+            game_over = True
+            return game_over
+        if self.row0[2] == player.token and self.row1[1] == player.token and self.row2[0] == player.token:
+            print(f'{player.name} wins!')
+            time.sleep(1.5)
+            game_over = True
+            return game_over
+        index = 0
+        while index <3:
+            if (self.row0[index] == player.token) and (self.row1[index] == player.token) and (self.row2[index] == player.token):
+                print(f'{player.name} wins!')
+                time.sleep(1.5)
+                game_over = True
+                return game_over
+            index += 1
+
+
 
 
     def move(self, player):
@@ -79,10 +109,18 @@ player1 = Player("Joe", " X")
 player2 = Player("Sam", " O")
 board = Board()
 while True:
+    game_over = False
     print(board)
     board.move(player1)
+    board.check_for_winner(player1)
+    if game_over == True:
+        break
     print(board)
     board.move(player2)
+    board.check_for_winner(player2)
+    if game_over == True:
+        break
+
 
 # " X̲|"
 # O̲
