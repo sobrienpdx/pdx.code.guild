@@ -27,13 +27,13 @@ class Board():
         self.row0 = [" ", " ", " "]
         self.row1 = [" ", " ", " "]
         self.row2 = [" ", " ", " "]
-        self.row_names = [self.row0, self.row1, self.row2]
+        self.rows = [self.row0, self.row1, self.row2]
 
     def __repr__(self):
         cls()
         outstring = "|"
         n = 0
-        for row in self.row_names:
+        for row in self.rows:
             for space in row:
                 outstring += space + "|"
                 n += 1
@@ -43,7 +43,7 @@ class Board():
 
     def check_for_winner(self, player):
         #check horizontal:
-        for index, row in enumerate(self.row_names):
+        for index, row in enumerate(self.rows):
             if (row[0] == player.token) and (row[1] == player.token) and (row[2] == player.token):
                 game_over = True
                 return game_over
@@ -65,16 +65,16 @@ class Board():
     def move(self, player):
         if player.name != "computer":
             while True:
-                try:
-                    what_move = int(input(f"What move would you like to make, {player.name}? (number 1 - 9) \n: ").strip())
-                    if not 0 < what_move < 10:
-                        raise ValueError
-                    else:
-                        move = what_move
-                        break
-                except ValueError:
-                    print("Please enter a number between 1 and 9.")
-            while True:
+                while True:
+                    try:
+                        what_move = int(input(f"What move would you like to make, {player.name}? (number 1 - 9) \n: ").strip())
+                        if not 0 < what_move < 10:
+                            raise ValueError
+                        else:
+                            move = what_move
+                            break
+                    except ValueError:
+                        print("Please enter a number between 1 and 9.")
                 if move in [1, 2, 3]:
                     if self.row0[move -1] == " ":
                         self.row0[move -1] = player.token
@@ -88,18 +88,11 @@ class Board():
                         self.row2[move -7] = player.token
                         break
                 print("Space taken. Try again.")
-                while True:
-                    try:
-                        what_move = int(input(f"What move would you like to make, {player.name}? (number 1 - 9) \n: ").strip())
-                        if not 0 < what_move < 10:
-                            raise ValueError
-                        move = what_move
-                        break
-                    except ValueError:
-                        print("Please enter a number between 1 and 9.")
+
         else:
             while True:
                 move = random.randint(1, 9)
+                time.sleep(1)
                 if move in [1, 2, 3]:
                     if self.row0[move -1] == " ":
                         self.row0[move -1] = player.token
@@ -114,7 +107,7 @@ class Board():
                         break
 
     def cats_game(self):
-        for i in self.row_names:
+        for i in self.rows:
             for index, space in enumerate(i):
                 if space == " ":
                     full_board = False
@@ -146,15 +139,13 @@ class Board():
                 return "The cat"
 
 opponent = input("Would you like to play against the computer (c) or a human friend (h)? ")
+player1_name = input("What is your name, player one? ")
+player1 = Player(player1_name, "X")
 if opponent == "h":
-    player1_name = input("What is your name, player one? ")
-    player1 = Player(player1_name, "X")
     player2_name = input("What is your name, player two? ")
     player2 = Player(player2_name, "O")
     board = Board()
 elif opponent == "c":
-    player1_name = input("What is your name, player one? ")
-    player1 = Player(player1_name, "X")
     player2 = Player("computer", "O")
     board = Board()
 while True:
