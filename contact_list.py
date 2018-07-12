@@ -16,16 +16,8 @@
 # Thyme,Justin,3
 import csv
 
-contacts = {'Freely': {'first_name': 'IP', 'last_name': 'Freely', 'phone_number': '8'}, 'Care': {'first_name': 'Shirley U.', 'last_name': 'Care', 'phone_number': '8'}}
-csv_style_contacts = []
+contacts = {}
 
-# with open("contact_list.cvs", "r",) as csv_file:
-#     csv_reader = csv.reader(csv_file)
-
-# with open('contact_list.csv', 'a') as csvfile:
-#     fieldnames = ['first_name', 'last_name', 'phone_number']
-#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-#     writer.writerow({'first_name': 'Baked', 'last_name': 'Beans', 'phone_number': '56'})
 
 def populate_contact_list():
     '''
@@ -42,7 +34,8 @@ def populate_contact_list():
             contacts[line[1]] = temp
         return contacts
 
-def return_to_comma_separated_values(contacts):
+
+def write_updated_phonebook_over_old_csv(contacts):
     '''
     puts dictionary back to csv format
     returns list of csv entries
@@ -50,58 +43,17 @@ def return_to_comma_separated_values(contacts):
     'IP,Freely,8
     Shirley U.,Care,8'
     '''
-    # with open("contacts.csv", "w") as csv_file:
-    #         fieldnames = ['first_name', 'last_name', 'phone_number']
-    #         csv_writer = csv.writer(contacts.csv, fieldnames=fieldnames)
-    #         for key in contacts:
-    #             csv_writer.writerow
-    for entry in contacts:
-        csv_style_line = contacts[entry]['first_name']+","+ contacts[entry]['last_name']+ ","+ contacts[entry]['phone_number']
-        print(csv_style_line)
-    # print(csv_style_contacts)
-
-# populate_contact_list()
-return_to_comma_separated_values(contacts)
-
-# print(contacts)
-# print(contacts['Freely']['first_name']+","+ contacts['Freely']['last_name']+ ","+ contacts['Freely']['phone_number'])
-# foo = contacts['Freely']['first_name']+","+ contacts['Freely']['last_name']+ ","+ contacts['Freely']['phone_number']
-# print(foo)
-# def write_and_save_updated_list(contacts):
-#     with open("contacts.csv", "w") as csv_file:
-#         fieldnames = ['first_name', 'last_name', 'phone_number']
-#         csv_writer = csv.writer(contacts.csv, fieldnames=fieldnames)
-#         for key in contacts:
-#             csv_writer.writerow
-
-    # csv_writer.writeheader()
-    #
-    #     for line in csv_reader:
-    #         csv_writer.writerow(line)
+    with open("new_contacts.csv", "w") as new_csv_file:
+        outstring = 'first_name'+","+'last_name'+","+'phone_number'+"\n"
+        for entry in contacts:
+            outstring +=  contacts[entry]['first_name']+","+ contacts[entry]['last_name']+ ","+ contacts[entry]['phone_number']+"\n"
+        new_csv_file.write(outstring)
 
 
-
-# write_and_save_updated_list(contacts)
-
-    # with open("newcsvfile", "w") as new_file:
-    #     csv_writer = csv.writer(new_file, delimiter = "-")
-
-    # next(csv_reader)
-#
+populate_contact_list()
+write_updated_phonebook_over_old_csv(contacts)
 
 
-    # for line in csv_reader:
-        # print(line[2])
-
-
-#
-# def retrieve():
-#     with open('contacts.csv', "r", newline='') as csvfile:
-#          contactreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-#          for row in contactreader:
-#              print(' '.join(row))
-#
-#
 # def user_selection():
 #     while True:
 #         print('What do you want to do?')
@@ -126,40 +78,3 @@ return_to_comma_separated_values(contacts)
 #     print('Goodbye then!')
 #
 #
-# # with open('contacts.csv', 'w', newline='') as csvfile:
-# #     spamwriter = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-# #     spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
-# #     spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
-#
-# # with open('contacts.csv', newline='') as csvfile:
-# #      contactreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-# #      for row in contactreader:
-# #          print(' '.join(row))
-#
-#
-# with open('contacts.csv', 'a', newline='') as csvfile:
-#     fieldnames = ['first_name', 'last_name', 'phone_number']
-#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-#
-#     # writer.writeheader()
-#     # writer.writerow({'first_name': confirmed_last_to_add, 'last_name': confirmed_name_to_add, 'phone_number': confirmed_number_to_add})
-#     add_it_all = create_contact()
-#     writer.writerow(add_it_all)
-#
-#
-# import csv
-# with open('contacts.csv', newline='') as csvfile:
-#     reader = csv.DictReader(csvfile)
-#     for row in reader:
-#         print(row['first_name'], row['last_name'], row['phone_number'])
-#
-#
-# print(row)
-#
-# with open('contacts.csv', 'r') as file:
-#     lines = file.read().split('\n')
-#     print(lines)
-#
-#     #YOU MUST HAVE THE USER QUIT TO EXIT... CNTRL C WON'T SAVE ANY INFO!!!
-#
-#     #WRITE TO FILE SAVES INFO
