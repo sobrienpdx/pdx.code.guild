@@ -43,16 +43,47 @@ def write_updated_phonebook_over_old_csv(contacts):
     'IP,Freely,8
     Shirley U.,Care,8'
     '''
-    with open("new_contacts.csv", "w") as new_csv_file:
+    with open("contacts.csv", "w") as updated_csv_file:
         outstring = 'first_name'+","+'last_name'+","+'phone_number'+"\n"
         for entry in contacts:
             outstring +=  contacts[entry]['first_name']+","+ contacts[entry]['last_name']+ ","+ contacts[entry]['phone_number']+"\n"
-        new_csv_file.write(outstring)
+        updated_csv_file.write(outstring)
 
 
 populate_contact_list()
 write_updated_phonebook_over_old_csv(contacts)
 
+
+def add():
+    while True:
+        last = input('Last name? ')
+        first = input('First name? ')
+        phone = input('Phone number? ')
+        print('  Last name: ' + last)
+        print('  First name: ' + first)
+        print('  Phone number: ' + phone)
+        correct_or_no = input("Is that correct? ")
+        if correct_or_no.lower().strip() in ["y", "yes"]:
+            contacts[last]= {'first_name': first, 'last_name': last, 'phone_number': phone}
+            break
+    print(contacts)
+
+write_updated_phonebook_over_old_csv(contacts)
+
+# def read_and_store_info(last, prompt_prefix):
+#   while True:
+#       last = input('Last name? ')
+#     first = input(prompt_prefix + 'First name? ')
+#     phone = input(prompt_prefix + 'Phone number? ')
+#     print('You said:')
+#     print('  First name: ' + first)
+#     print('  Phone number: ' + phone)
+#     if yes_or_no_question('Is that correct (y/n)? '):
+#       address_book[last] = {'first_name': first, 'phone': phone}
+#       break
+
+add()
+write_updated_phonebook_over_old_csv(contacts)
 
 # def user_selection():
 #     while True:
