@@ -16,22 +16,16 @@
 # Thyme,Justin,3
 import csv
 
-contacts = {}
+contacts = {'Freely': {'first_name': 'IP', 'last_name': 'Freely', 'phone_number': '8'}, 'Care': {'first_name': 'Shirley U.', 'last_name': 'Care', 'phone_number': '8'}}
 csv_style_contacts = []
-
-# csv_style_line = input("what is the contact to add to the dictionary? ")
-
-
 
 # with open("contact_list.cvs", "r",) as csv_file:
 #     csv_reader = csv.reader(csv_file)
-
 
 # with open('contact_list.csv', 'a') as csvfile:
 #     fieldnames = ['first_name', 'last_name', 'phone_number']
 #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 #     writer.writerow({'first_name': 'Baked', 'last_name': 'Beans', 'phone_number': '56'})
-
 
 def populate_contact_list():
     '''
@@ -47,13 +41,32 @@ def populate_contact_list():
             temp = {'first_name': line[0], 'last_name': line[1], 'phone_number': line[2]}
             contacts[line[1]] = temp
         return contacts
-populate_contact_list()
-print(contacts)
+
+def return_to_comma_separated_values(contacts):
+    '''
+    puts dictionary back to csv format
+    returns list of csv entries
+    >>> return_to_comma_separated_values(contacts):
+    'IP,Freely,8
+    Shirley U.,Care,8'
+    '''
+    # with open("contacts.csv", "w") as csv_file:
+    #         fieldnames = ['first_name', 'last_name', 'phone_number']
+    #         csv_writer = csv.writer(contacts.csv, fieldnames=fieldnames)
+    #         for key in contacts:
+    #             csv_writer.writerow
+    for entry in contacts:
+        csv_style_line = contacts[entry]['first_name']+","+ contacts[entry]['last_name']+ ","+ contacts[entry]['phone_number']
+        print(csv_style_line)
+    # print(csv_style_contacts)
+
+# populate_contact_list()
+return_to_comma_separated_values(contacts)
+
 # print(contacts)
-# for entry in contacts:
-#     for key in entry:
-#         print(contact[entry][key])
-#     print("yay")
+# print(contacts['Freely']['first_name']+","+ contacts['Freely']['last_name']+ ","+ contacts['Freely']['phone_number'])
+# foo = contacts['Freely']['first_name']+","+ contacts['Freely']['last_name']+ ","+ contacts['Freely']['phone_number']
+# print(foo)
 # def write_and_save_updated_list(contacts):
 #     with open("contacts.csv", "w") as csv_file:
 #         fieldnames = ['first_name', 'last_name', 'phone_number']
