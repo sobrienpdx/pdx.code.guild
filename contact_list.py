@@ -50,10 +50,6 @@ def write_updated_phonebook_over_old_csv(contacts):
         updated_csv_file.write(outstring)
 
 
-populate_contact_list()
-write_updated_phonebook_over_old_csv(contacts)
-
-
 def add():
     while True:
         last = input('Last name? ')
@@ -66,46 +62,91 @@ def add():
         if correct_or_no.lower().strip() in ["y", "yes"]:
             contacts[last]= {'first_name': first, 'last_name': last, 'phone_number': phone}
             break
-    print(contacts)
+    print(contacts[last])
 
+
+def change():
+    while True:
+        last = input('What is the last name of the person to update? ')
+        if last not in contacts:
+            print(f"Entry for {last} not found.")
+        else:
+            break
+    while True:
+        last = input('Last name to save? ')
+        first = input('First name to save? ')
+        phone = input('Phone number to save? ')
+        print('  Last name: ' + last)
+        print('  First name: ' + first)
+        print('  Phone number: ' + phone)
+        correct_or_no = input("Is that correct? ")
+        if correct_or_no.lower().strip() in ["y", "yes"]:
+            contacts[last]= {'first_name': first, 'last_name': last, 'phone_number': phone}
+            break
+        print(contacts[last])
+
+
+def retrieve():
+    while True:
+        last = input('What is the last name of the person you would like to look up? ')
+        if last not in contacts:
+            print(f"Entry for {last} not found.")
+        else:
+            break
+    entry = contacts[last]
+    first = entry['first_name']
+    phone = entry['phone_number']
+    print('first name: ' + first)
+    print('phone: ' + phone)
+
+
+def delete():
+    while True:
+        last = input('What is the last name of the person you would like to delete? ')
+        if last not in contacts:
+            print(f"Entry for {last} not found.")
+        else:
+            break
+    while True:
+        print('The following entry will be deleted: ')
+        print(contacts[last])
+        correct_or_no = input("Is that correct? ")
+        if correct_or_no.lower().strip() in ["y", "yes"]:
+            break
+    print(f"Entry for {last} has been deleted.")
+    del contacts[last]
+
+
+
+
+def user_selection():
+    while True:
+        print('What do you want to do?')
+        print('  1 Add an entry')
+        print('  2 Change an entry')
+        print('  3 Retrieve an entry')
+        print('  4 Delete an entry')
+        task = input(': ')
+        if task == '1':
+            add()
+            write_updated_phonebook_over_old_csv(contacts)
+        elif task == '2':
+            change()
+            write_updated_phonebook_over_old_csv(contacts)
+        elif task == '3':
+            retrieve()
+            write_updated_phonebook_over_old_csv(contacts)
+        elif task == '4':
+            delete()
+            write_updated_phonebook_over_old_csv(contacts)
+        else:
+            print('Entry not found.')
+            continue
+        more = input('Do you want to do anything else (y/n)? ')
+        if more.strip().lower() in ["n", "no"]:
+            break
+    print('Goodbye then!')
+
+populate_contact_list()
+user_selection()
 write_updated_phonebook_over_old_csv(contacts)
-
-# def read_and_store_info(last, prompt_prefix):
-#   while True:
-#       last = input('Last name? ')
-#     first = input(prompt_prefix + 'First name? ')
-#     phone = input(prompt_prefix + 'Phone number? ')
-#     print('You said:')
-#     print('  First name: ' + first)
-#     print('  Phone number: ' + phone)
-#     if yes_or_no_question('Is that correct (y/n)? '):
-#       address_book[last] = {'first_name': first, 'phone': phone}
-#       break
-
-add()
-write_updated_phonebook_over_old_csv(contacts)
-
-# def user_selection():
-#     while True:
-#         print('What do you want to do?')
-#         print('  1 Add an entry')
-#         print('  2 Change an entry')
-#         print('  3 Retrieve an entry')
-#         print('  4 Delete an entry')
-#         task = input(': ')
-#         if task == '1':
-#             add()
-#         elif task == '2':
-#             change()
-#         elif task == '3':
-#             retrieve()
-#         elif task == '4':
-#             delete()
-#         else:
-#             print('Entry not found.')
-#             continue
-#         if not yes_or_no_question('Do you want to do anything else (y/n)? '):
-#             break
-#     print('Goodbye then!')
-#
-#
